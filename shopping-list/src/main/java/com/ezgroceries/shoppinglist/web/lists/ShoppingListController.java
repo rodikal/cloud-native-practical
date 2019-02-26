@@ -1,11 +1,13 @@
 package com.ezgroceries.shoppinglist.web.lists;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +36,22 @@ public class ShoppingListController {
         // TODO add cocktails to shopping list
         return ResponseEntity.ok(body.subList(0,1));
     }
+
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ShoppingListResource> getList(@PathVariable String id) {
+        // TODO get shoppingList
+        UUID uuid = UUID.fromString(id);
+        ShoppingListResource shoppingList = new ShoppingListResource(uuid, "Stephanie's birthday");
+        Arrays.asList("Tequila",
+                "Triple sec",
+                "Lime juice",
+                "Salt",
+                "Blue Curacao").forEach(shoppingList::addIngredient);
+        return ResponseEntity.ok(shoppingList);
+    }
+
+
 
 
 
