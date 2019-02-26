@@ -75,5 +75,33 @@ public class ShoppingListControllerTest {
                 .andExpect(jsonPath("$.ingredients[4]").value("Blue Curacao"))
         ;
     }
+    @Test
+    public void getShoppingLists() throws Exception {
+        this.mockMvc
+                .perform(
+                        get("/shopping-lists")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].shoppingListId").value("4ba92a46-1d1b-4e52-8e38-13cd56c7224c"))
+                .andExpect(jsonPath("$[0].name").value("Stephanie's birthday"))
+                .andExpect(jsonPath("$[0].ingredients.length()").value(5))
+                .andExpect(jsonPath("$[0].ingredients[0]").value("Tequila"))
+                .andExpect(jsonPath("$[0].ingredients[1]").value("Triple sec"))
+                .andExpect(jsonPath("$[0].ingredients[2]").value("Lime juice"))
+                .andExpect(jsonPath("$[0].ingredients[3]").value("Salt"))
+                .andExpect(jsonPath("$[0].ingredients[4]").value("Blue Curacao"))
+                .andExpect(jsonPath("$[1].shoppingListId").value("6c7d09c2-8a25-4d54-a979-25ae779d2465"))
+                .andExpect(jsonPath("$[1].name").value("My birthday"))
+                .andExpect(jsonPath("$[1].ingredients.length()").value(5))
+                .andExpect(jsonPath("$[1].ingredients[0]").value("Tequila"))
+                .andExpect(jsonPath("$[1].ingredients[1]").value("Triple sec"))
+                .andExpect(jsonPath("$[1].ingredients[2]").value("Lime juice"))
+                .andExpect(jsonPath("$[1].ingredients[3]").value("Salt"))
+                .andExpect(jsonPath("$[1].ingredients[4]").value("Blue Curacao"))
+        ;
+    }
 
 }
