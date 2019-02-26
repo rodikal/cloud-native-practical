@@ -39,4 +39,20 @@ public class ShoppingListControllerTest {
         ;
     }
 
+    @Test
+    public void addCocktailsToList() throws Exception {
+        this.mockMvc
+                .perform(
+                        post("/shopping-lists/97c8e5bd-5353-426e-b57b-69eb2260ace3/cocktails")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .content("[{\"cocktailId\": \"23b3d85a-3928-41c0-a533-6538a71e17c4\"}, {\"cocktailId\": \"d615ec78-fe93-467b-8d26-5d26d8eab073\"}]")
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("[0].cocktailId").value("23b3d85a-3928-41c0-a533-6538a71e17c4"))
+        ;
+    }
+
 }
