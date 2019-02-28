@@ -1,5 +1,6 @@
-package com.ezgroceries.shoppinglist.web.cocktails;
+package com.ezgroceries.shoppinglist.cocktails.web;
 
+import com.ezgroceries.shoppinglist.cocktails.CocktailResource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;

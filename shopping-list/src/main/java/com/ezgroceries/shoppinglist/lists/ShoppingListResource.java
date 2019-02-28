@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist.web.lists;
+package com.ezgroceries.shoppinglist.lists;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist.web.lists;
+package com.ezgroceries.shoppinglist.lists.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

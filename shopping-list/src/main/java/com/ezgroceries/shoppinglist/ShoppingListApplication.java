@@ -12,7 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@ComponentScan("com.ezgroceries.shoppinglist.web")
+@ComponentScan("com.ezgroceries.shoppinglist")
 @EnableSwagger2
 @EnableFeignClients
 public class ShoppingListApplication {
