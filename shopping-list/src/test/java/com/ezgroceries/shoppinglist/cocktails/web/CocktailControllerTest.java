@@ -1,5 +1,6 @@
 package com.ezgroceries.shoppinglist.cocktails.web;
 
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.ezgroceries.shoppinglist.cocktails.CocktailDBClient;
 import com.ezgroceries.shoppinglist.cocktails.CocktailDBResponse;
+import com.ezgroceries.shoppinglist.cocktails.service.CocktailService;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -30,10 +32,14 @@ public class CocktailControllerTest {
     @MockBean
     public CocktailDBClient cocktailDBClient;
 
+    @MockBean
+    public CocktailService cocktailService;
+
     @Test
-    public void getAccountsTest() throws Exception {
+    public void getCocktailsTest() throws Exception {
 
         given(cocktailDBClient.searchCocktails("Russian")).willReturn(getCocktails());
+        given(cocktailService.mergeCocktails(anyList())).willCallRealMethod();
         this.mockMvc
                 .perform(get("/cocktails")
                         .param("search", "Russian")
@@ -60,6 +66,7 @@ public class CocktailControllerTest {
         ;
 
         verify(cocktailDBClient).searchCocktails("Russian");
+        verify(cocktailService).mergeCocktails(getCocktails().getDrinks());
     }
 
 

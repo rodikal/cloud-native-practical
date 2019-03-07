@@ -3,6 +3,7 @@ package com.ezgroceries.shoppinglist.cocktails.entities;
 import com.ezgroceries.shoppinglist.util.StringSetConverter;
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,18 +16,13 @@ public class CocktailEntity {
     @Id
     private UUID id;
 
-    private String id_drink;
+    @Column(name="ID_DRINK")
+    private String idDrink;
 
     private String name;
 
     @Convert(converter = StringSetConverter.class)
     private Set<String> ingredients;
-
-    public CocktailEntity(UUID id, String id_drink, String name) {
-        this.id = id;
-        this.id_drink = id_drink;
-        this.name = name;
-    }
 
     public UUID getId() {
         return id;
@@ -36,12 +32,12 @@ public class CocktailEntity {
         this.id = id;
     }
 
-    public String getId_drink() {
-        return id_drink;
+    public String getIdDrink() {
+        return idDrink;
     }
 
-    public void setId_drink(String id_drink) {
-        this.id_drink = id_drink;
+    public void setIdDrink(String idDrink) {
+        this.idDrink = idDrink;
     }
 
     public String getName() {

@@ -12,4 +12,7 @@ public interface CocktailDBClient {
     @GetMapping(value = "search.php")
     CocktailDBResponse searchCocktails(@RequestParam("s") String search);
 
+    @GetMapping(value = "lookup.php")
+    CocktailDBResponse getCocktail(@RequestParam("i") String id);
+
 }
