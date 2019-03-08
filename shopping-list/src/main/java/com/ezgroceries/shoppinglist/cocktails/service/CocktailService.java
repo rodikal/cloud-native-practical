@@ -71,7 +71,7 @@ public class CocktailService  {
     }
 
     public List<CocktailEntity> getAllById(List<String> cocktails) {
-        return cocktailRepository.findAllById(cocktails.stream().map(UUID::fromString).collect(Collectors.toList()));
+        return cocktailRepository.findAllByIdIn(cocktails.stream().map(UUID::fromString).collect(Collectors.toList()));
     }
 
     public List<CocktailResource> getAllResourcesById(List<String> cocktails) {

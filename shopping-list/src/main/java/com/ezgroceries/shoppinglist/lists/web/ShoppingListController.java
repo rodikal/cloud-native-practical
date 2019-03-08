@@ -3,11 +3,8 @@ package com.ezgroceries.shoppinglist.lists.web;
 import com.ezgroceries.shoppinglist.lists.ShoppingListResource;
 import com.ezgroceries.shoppinglist.lists.service.ShoppingListService;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,55 +48,24 @@ public class ShoppingListController {
         List<String> cocktails = body.stream().map(map -> map.get("cocktailId")).collect(Collectors.toList());
 
         shoppingListService.addCocktails(resource, cocktails);
-        return ResponseEntity.ok(body.subList(0, 1));
+
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ShoppingListResource> getList(@PathVariable String id) {
-        // TODO get shoppingList
-        UUID uuid = UUID.fromString(id);
-        ShoppingListResource shoppingList = new ShoppingListResource();
-        shoppingList.setShoppingListId(uuid);
-        shoppingList.setName("Stephanie's birthday");
-        Arrays.asList("Tequila",
-                "Triple sec",
-                "Lime juice",
-                "Salt",
-                "Blue Curacao").forEach(shoppingList::addIngredient);
+        ShoppingListResource shoppingList = shoppingListService.getWithDetails(id);
+        if (shoppingList == null){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(shoppingList);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<ShoppingListResource>> getList() {
-        // TODO get shoppingLists
-        List<ShoppingListResource> lists = new ArrayList<>();
-        {
-            UUID uuid = UUID.fromString("4ba92a46-1d1b-4e52-8e38-13cd56c7224c");
-            ShoppingListResource shoppingList = new ShoppingListResource();
-            shoppingList.setShoppingListId(uuid);
-            shoppingList.setName("Stephanie's birthday");
-            Arrays.asList("Tequila",
-                    "Triple sec",
-                    "Lime juice",
-                    "Salt",
-                    "Blue Curacao").forEach(shoppingList::addIngredient);
-            lists.add(shoppingList);
-        }
-        {
-            UUID uuid = UUID.fromString("6c7d09c2-8a25-4d54-a979-25ae779d2465");
-            ShoppingListResource shoppingList = new ShoppingListResource();
-            shoppingList.setShoppingListId(uuid);
-            shoppingList.setName("My birthday");
-            Arrays.asList("Tequila",
-                    "Triple sec",
-                    "Lime juice",
-                    "Salt",
-                    "Blue Curacao").forEach(shoppingList::addIngredient);
-            lists.add(shoppingList);
-        }
-        return ResponseEntity.ok(lists);
+        return ResponseEntity.ok(shoppingListService.getAllWithDetails());
     }
 
 

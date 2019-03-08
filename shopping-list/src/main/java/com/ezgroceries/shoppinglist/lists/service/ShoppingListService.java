@@ -2,7 +2,6 @@ package com.ezgroceries.shoppinglist.lists.service;
 
 import com.ezgroceries.shoppinglist.cocktails.CocktailResource;
 import com.ezgroceries.shoppinglist.cocktails.entities.CocktailEntity;
-import com.ezgroceries.shoppinglist.cocktails.repository.CocktailRepository;
 import com.ezgroceries.shoppinglist.cocktails.service.CocktailService;
 import com.ezgroceries.shoppinglist.lists.ShoppingListResource;
 import com.ezgroceries.shoppinglist.lists.entities.ShoppingListEntity;
@@ -43,6 +42,21 @@ public class ShoppingListService {
     public ShoppingListResource get(String uuid) {
         Optional<ShoppingListEntity> entity = shoppingListRepository.findById(UUID.fromString(uuid));
         return entity.map(this::mapEntity).orElse(null);
+    }
+
+    public ShoppingListResource getWithDetails(String uuid) {
+        Optional<ShoppingListEntity> entity = shoppingListRepository.findById(UUID.fromString(uuid));
+        return entity.map(this::mapEntityWithIngredients).orElse(null);
+    }
+
+    public List<ShoppingListResource> getAll() {
+        List<ShoppingListEntity> entity = shoppingListRepository.findAll();
+        return entity.stream().map(this::mapEntity).collect(Collectors.toList());
+    }
+
+    public List<ShoppingListResource> getAllWithDetails() {
+        List<ShoppingListEntity> entity = shoppingListRepository.findAll();
+        return entity.stream().map(this::mapEntityWithIngredients).collect(Collectors.toList());
     }
 
     private ShoppingListResource mapEntity(ShoppingListEntity entity){

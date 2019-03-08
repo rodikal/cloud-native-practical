@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CocktailRepository extends CrudRepository<CocktailEntity, UUID> {
     List<CocktailEntity> findByIdDrinkIn(List<String> ids);
-    List<CocktailEntity> findAllById(List<UUID> ids);
+    List<CocktailEntity> findAllByIdIn(List<UUID> ids);
 }
