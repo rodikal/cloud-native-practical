@@ -1,5 +1,7 @@
 package com.ezgroceries.shoppinglist.lists.service;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 import com.ezgroceries.shoppinglist.cocktails.CocktailResource;
 import com.ezgroceries.shoppinglist.cocktails.entities.CocktailEntity;
 import com.ezgroceries.shoppinglist.cocktails.service.CocktailService;
@@ -67,7 +69,7 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
     private ShoppingListResource mapEntityWithIngredients(ShoppingListEntity entity){
         ShoppingListResource resource = mapEntity(entity);
-        List<String> collect = entity.getCocktails().stream().map(CocktailEntity::getId).map(UUID::toString).collect(Collectors.toList());
+        List<String> collect = emptyIfNull(entity.getCocktails()).stream().map(CocktailEntity::getId).map(UUID::toString).collect(Collectors.toList());
         List<String> ingredients = cocktailService.getAllResourcesById(collect).stream().map(CocktailResource::getIngredients).flatMap(List::stream).distinct().collect(Collectors.toList());
         resource.setIngredients(ingredients);
         return resource;
