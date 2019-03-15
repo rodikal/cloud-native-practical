@@ -1,6 +1,7 @@
 package com.ezgroceries.shoppinglist.lists.entities;
 
 import com.ezgroceries.shoppinglist.cocktails.entities.CocktailEntity;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -55,6 +56,9 @@ public class ShoppingListEntity {
     }
 
     public void addCocktails(List<CocktailEntity> cocktails) {
+        if(this.cocktails == null){
+            this.cocktails = new ArrayList<>();
+        }
         this.cocktails.addAll(cocktails);
     }
 }

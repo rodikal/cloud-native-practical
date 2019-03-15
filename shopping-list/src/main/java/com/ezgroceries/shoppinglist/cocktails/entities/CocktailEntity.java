@@ -16,7 +16,7 @@ public class CocktailEntity {
     @Id
     private UUID id;
 
-    @Column(name="ID_DRINK")
+    @Column(name="id_drink")
     private String idDrink;
 
     private String name;
