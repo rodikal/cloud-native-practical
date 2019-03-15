@@ -10,23 +10,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingListService {
 
-    private ShoppingListRepository shoppingListRepository;
+    private final ShoppingListRepository shoppingListRepository;
 
-    private CocktailService cocktailService;
+    private final CocktailService cocktailService;
 
-    @Autowired
-    public ShoppingListService(ShoppingListRepository shoppingListRepository) {
+    public ShoppingListService(ShoppingListRepository shoppingListRepository, CocktailService cocktailService) {
         this.shoppingListRepository = shoppingListRepository;
-    }
-
-    @Autowired
-    public void setCocktailService(CocktailService cocktailService) {
         this.cocktailService = cocktailService;
     }
 

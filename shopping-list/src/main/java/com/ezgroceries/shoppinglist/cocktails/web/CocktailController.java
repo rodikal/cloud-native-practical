@@ -5,7 +5,6 @@ import com.ezgroceries.shoppinglist.cocktails.CocktailDBResponse;
 import com.ezgroceries.shoppinglist.cocktails.CocktailResource;
 import com.ezgroceries.shoppinglist.cocktails.service.CocktailService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,17 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/cocktails", produces = "application/json")
 public class CocktailController {
 
-    private CocktailService cocktailService;
-    private CocktailDBClient cocktailDBClient;
+    private final CocktailService cocktailService;
+    private final CocktailDBClient cocktailDBClient;
 
-    @Autowired
-    public void setCocktailDBClient(CocktailDBClient cocktailDBClient) {
-        this.cocktailDBClient = cocktailDBClient;
-    }
-
-    @Autowired
-    public void setCocktailService(CocktailService cocktailService) {
+    public CocktailController(CocktailService cocktailService, CocktailDBClient cocktailDBClient) {
         this.cocktailService = cocktailService;
+        this.cocktailDBClient = cocktailDBClient;
     }
 
     @GetMapping

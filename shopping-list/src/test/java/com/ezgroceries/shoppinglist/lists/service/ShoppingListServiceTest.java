@@ -17,19 +17,15 @@ import org.mockito.ArgumentCaptor;
 
 class ShoppingListServiceTest {
 
-
     private ShoppingListRepository shoppingListRepository;
-
-    private CocktailService cocktailService;
 
     private ShoppingListService shoppingListService;
 
     @BeforeEach
     void setup() {
         shoppingListRepository = mock(ShoppingListRepository.class);
-        cocktailService = mock(CocktailService.class);
-        shoppingListService = new ShoppingListService(shoppingListRepository);
-        shoppingListService.setCocktailService(cocktailService);
+        CocktailService cocktailService = mock(CocktailService.class);
+        shoppingListService = new ShoppingListService(shoppingListRepository, cocktailService);
     }
 
     @Test

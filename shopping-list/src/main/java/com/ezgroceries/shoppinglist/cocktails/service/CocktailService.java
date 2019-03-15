@@ -11,23 +11,17 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CocktailService  {
 
-    private CocktailRepository cocktailRepository;
+    private final CocktailRepository cocktailRepository;
 
-    private CocktailDBClient cocktailDBClient;
+    private final CocktailDBClient cocktailDBClient;
 
-    @Autowired
-    public void setCocktailRepository(CocktailRepository cocktailRepository){
+    public CocktailService(CocktailRepository cocktailRepository, CocktailDBClient cocktailDBClient) {
         this.cocktailRepository = cocktailRepository;
-    }
-
-    @Autowired
-    public void setCocktailDBClient(CocktailDBClient cocktailDBClient) {
         this.cocktailDBClient = cocktailDBClient;
     }
 

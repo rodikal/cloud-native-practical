@@ -6,7 +6,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +21,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "/shopping-lists", produces = "application/json")
 public class ShoppingListController {
 
-    private ShoppingListService shoppingListService;
+    private final ShoppingListService shoppingListService;
 
-    @Autowired
-    public void setShoppingListService(ShoppingListService shoppingListService) {
+    public ShoppingListController(ShoppingListService shoppingListService) {
         this.shoppingListService = shoppingListService;
     }
 
