@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.ezgroceries.shoppinglist.cocktails.service.CocktailService;
+import com.ezgroceries.shoppinglist.cocktails.service.CocktailServiceImpl;
 import com.ezgroceries.shoppinglist.lists.ShoppingListResource;
 import com.ezgroceries.shoppinglist.lists.entities.ShoppingListEntity;
 import com.ezgroceries.shoppinglist.lists.repository.ShoppingListRepository;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class ShoppingListServiceTest {
+class ShoppingListServiceImplTest {
 
     private ShoppingListRepository shoppingListRepository;
 
@@ -24,8 +25,8 @@ class ShoppingListServiceTest {
     @BeforeEach
     void setup() {
         shoppingListRepository = mock(ShoppingListRepository.class);
-        CocktailService cocktailService = mock(CocktailService.class);
-        shoppingListService = new ShoppingListService(shoppingListRepository, cocktailService);
+        CocktailService cocktailService = mock(CocktailServiceImpl.class);
+        shoppingListService = new ShoppingListServiceImpl(shoppingListRepository, cocktailService);
     }
 
     @Test

@@ -10,9 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.ezgroceries.shoppinglist.cocktails.CocktailDBClient;
 import com.ezgroceries.shoppinglist.cocktails.CocktailDBResponse;
+import com.ezgroceries.shoppinglist.cocktails.CocktailResource;
 import com.ezgroceries.shoppinglist.cocktails.service.CocktailService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +41,9 @@ public class CocktailControllerTest {
     @Test
     public void getCocktailsTest() throws Exception {
 
-        given(cocktailDBClient.searchCocktails("Russian")).willReturn(getCocktails());
-        given(cocktailService.mergeCocktails(anyList())).willCallRealMethod();
+        CocktailDBResponse cocktails = getCocktails();
+        given(cocktailDBClient.searchCocktails("Russian")).willReturn(cocktails);
+        given(cocktailService.mergeCocktails(anyList())).willReturn(getMergedCocktails());
         this.mockMvc
                 .perform(get("/cocktails")
                         .param("search", "Russian")
@@ -66,7 +70,7 @@ public class CocktailControllerTest {
         ;
 
         verify(cocktailDBClient).searchCocktails("Russian");
-        verify(cocktailService).mergeCocktails(getCocktails().getDrinks());
+        verify(cocktailService).mergeCocktails(cocktails.getDrinks());
     }
 
 
@@ -100,5 +104,17 @@ public class CocktailControllerTest {
         cocktailDBResponse.setDrinks(drinks);
         return cocktailDBResponse;
     }
+
+    private List<CocktailResource> getMergedCocktails() {
+        return Arrays.asList(
+                new CocktailResource(UUID.randomUUID(), "Margerita", "Cocktail glass", "", "https://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg", Arrays.asList(
+                        "Tequila", "Triple sec", "Lime juice", "Salt"
+                )),
+                new CocktailResource(UUID.randomUUID(), "Blue Margerita", "Cocktail glass", "", "https://www.thecocktaildb.com/images/media/drink/qtvvyq1439905913.jpg", Arrays.asList(
+                        "Tequila", "Blue Curacao", "Lime juice", "Salt"
+                )));
+
+    }
+
 
 }
