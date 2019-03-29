@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-list-deployment
+  annotations:
+    version: 0.0.1-SNAPSHOT
+spec:
+  selector:
+    matchLabels:
+      name: shopping-list
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: shopping-list
+        component: shopping-list
+    spec:
+      containers:
+        - name: shopping-list
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "hsqldb"
+          image: shopping-list:0.0.1-SNAPSHOT
+          ports:
+          - containerPort: 8080
+          - containerPort: 8443
+          lifecycle:
+            preStop:
+              exec:
+                # SIGTERM triggers a quick exit; gracefully terminate instead
+                command: ["kill", "-SIGINT", "`pidof java`"]
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+          resources:
+            limits:
+              memory: 512Mi
