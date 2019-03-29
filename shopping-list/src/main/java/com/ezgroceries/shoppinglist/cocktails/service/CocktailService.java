@@ -11,4 +11,6 @@ public interface CocktailService {
     List<CocktailEntity> getAllById(List<String> cocktails);
 
     List<CocktailResource> getAllResourcesById(List<String> cocktails);
+
+    List<CocktailResource> searchCocktails(String search);
 }
