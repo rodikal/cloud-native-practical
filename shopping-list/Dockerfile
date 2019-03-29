@@ -6,4 +6,5 @@ RUN mvn package -DskipTests
 
 FROM openjdk:8u181-jre
 COPY --from=MAVEN_TOOL_CHAIN /tmp/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=hsqldb", "-jar","/app.jar"]
