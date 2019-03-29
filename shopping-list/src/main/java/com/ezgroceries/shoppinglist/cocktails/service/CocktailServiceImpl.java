@@ -77,4 +77,10 @@ public class CocktailServiceImpl implements CocktailService {
         List<CocktailDBResponse.DrinkResource> resources = allById.stream().map(CocktailEntity::getIdDrink).map(cocktailDBClient::getCocktail).map(e -> e.getDrinks().get(0)).collect(Collectors.toList());
         return mergeCocktails(resources);
     }
+
+    @Override
+    public List<CocktailResource> searchCocktails(String search) {
+        CocktailDBResponse dbResponse = cocktailDBClient.searchCocktails(search);
+        return mergeCocktails(dbResponse.getDrinks());
+    }
 }

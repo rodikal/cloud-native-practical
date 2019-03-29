@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication(scanBasePackages = "com.ezgroceries.shoppinglist.config")
+@SpringBootApplication
 @EnableSwagger2
 @EnableFeignClients
 public class ShoppingListApplication {
