@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist;
+package com.ezgroceries.shoppinglist.config;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Value;

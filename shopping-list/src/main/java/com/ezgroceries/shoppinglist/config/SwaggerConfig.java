@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist;
+package com.ezgroceries.shoppinglist.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
