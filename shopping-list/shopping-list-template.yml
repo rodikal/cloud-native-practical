@@ -1,44 +1,93 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: shopping-list-deployment
-  annotations:
-    version: 0.0.1-SNAPSHOT
-spec:
-  selector:
-    matchLabels:
-      name: shopping-list
-  replicas: 1
-  template:
-    metadata:
-      labels:
+apiVersion: v1
+kind: List
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: shopping-list-deployment
+    annotations:
+      version: 0.0.1-SNAPSHOT
+  spec:
+    selector:
+      matchLabels:
         name: shopping-list
-        component: shopping-list
-    spec:
-      containers:
-        - name: shopping-list
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "hsqldb"
-          image: shopping-list:0.0.1-SNAPSHOT
-          ports:
-          - containerPort: 8080
-          - containerPort: 8443
-          lifecycle:
-            preStop:
-              exec:
-                # SIGTERM triggers a quick exit; gracefully terminate instead
-                command: ["kill", "-SIGINT", "`pidof java`"]
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 15
-          resources:
-            limits:
-              memory: 512Mi
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: shopping-list
+          name: shopping-list
+          component: shopping-list
+      spec:
+        containers:
+          - name: shopping-list
+            env:
+              - name: SPRING_PROFILES_ACTIVE
+                value: "hsqldb"
+            image: shopping-list:0.0.1-SNAPSHOT
+            ports:
+            - containerPort: 8080
+            - containerPort: 8443
+            lifecycle:
+              preStop:
+                exec:
+                  # SIGTERM triggers a quick exit; gracefully terminate instead
+                  command: ["kill", "-SIGINT", "`pidof java`"]
+            readinessProbe:
+              httpGet:
+                path: /actuator/health
+                port: 8080
+              initialDelaySeconds: 10
+            livenessProbe:
+              httpGet:
+                path: /actuator/health
+                port: 8080
+              initialDelaySeconds: 15
+            resources:
+              limits:
+                memory: 512Mi
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: shopping-list-http
+  spec:
+    selector:
+      app: shopping-list
+    ports:
+      - protocol: TCP
+        port: 443
+        targetPort: 8443
+        name: https
+    type: LoadBalancer
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: shopping-list-https
+  spec:
+    selector:
+      app: shopping-list
+    ports:
+      - protocol: TCP
+        port: 443
+        targetPort: 8443
+        name: https
+    type: LoadBalancer
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: shopping-list-https
+  spec:
+    to:
+      kind: Service
+      name: shopping-list-https
+      targetPort:
+    tls:
+      termination: passthrough
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: shopping-list-http
+  spec:
+    to:
+      kind: Service
+      name: shopping-list-http
